@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "world_name": "StorySeed Classroom",
+  "characters": [
+    {"name": "a cautious inventor", "trait": "notices tiny details", "wish": "to fix a problem without making a fuss"},
+    {"name": "a brave class hamster", "trait": "keeps a notebook under the sawdust", "wish": "to prove small things can lead"},
+    {"name": "a mapmaker who gets lost", "trait": "draws honest mistakes", "wish": "to find the one path nobody labeled"},
+    {"name": "a librarian with a weather jar", "trait": "speaks softly to storms", "wish": "to return every borrowed cloud"},
+    {"name": "a robot who loves spelling", "trait": "sorts feelings alphabetically", "wish": "to write one perfect sentence"},
+    {"name": "a shy dragon made of chalk", "trait": "leaves clues on blackboards", "wish": "to be remembered after the rain"},
+    {"name": "a time-travelling lunch monitor", "trait": "knows tomorrow's pudding", "wish": "to stop a very polite disaster"},
+    {"name": "a detective with mismatched socks", "trait": "asks useful questions", "wish": "to solve the mystery before assembly"},
+    {"name": "a gardener who measures moonlight", "trait": "records small changes carefully", "wish": "to help something grow in the right place"},
+    {"name": "a museum guide who whispers to fossils", "trait": "connects clues from long ago", "wish": "to make the past feel close"},
+    {"name": "a poet who repairs bicycles", "trait": "hears rhythm in ordinary sounds", "wish": "to turn a problem into a pattern"},
+    {"name": "a class captain with a pocket telescope", "trait": "spots distant details first", "wish": "to bring everyone safely back"}
+  ],
+  "settings": [
+    {"name": "the school library", "texture": "the shelves hum when nobody is reading"},
+    {"name": "the playground after rain", "texture": "the puddles show places that are not there"},
+    {"name": "the art cupboard", "texture": "every paintbrush remembers a different ocean"},
+    {"name": "the science table", "texture": "there are magnets, labels, and one suspicious seed tray"},
+    {"name": "the lost-and-found box", "texture": "it is full of gloves, keys, and unfinished stories"},
+    {"name": "the moonlit classroom", "texture": "the desks are arranged like a tiny town"},
+    {"name": "the museum coach trip", "texture": "the windows are fogged with excited fingerprints"},
+    {"name": "the garden behind the sports hall", "texture": "there are bees, beanpoles, and a gate with no handle"},
+    {"name": "the corridor timeline", "texture": "each display board shows a different year"},
+    {"name": "the breakfast club table", "texture": "toast crumbs form a map nobody planned"},
+    {"name": "the reading corner tent", "texture": "torchlight makes shadows look like punctuation"},
+    {"name": "the empty assembly hall", "texture": "one echo keeps arriving late"}
+  ],
+  "objects": [
+    {"name": "a runaway umbrella", "twist": "opens whenever someone tells the truth"},
+    {"name": "a pencil that writes questions", "twist": "never gives the same question twice"},
+    {"name": "a compass that points to kindness", "twist": "spins near selfish choices"},
+    {"name": "a glass marble full of weather", "twist": "rattles before a surprise"},
+    {"name": "a lunchbox with a secret compartment", "twist": "contains clues instead of sandwiches"},
+    {"name": "a paper crown", "twist": "makes rules rhyme for one minute"},
+    {"name": "a tiny brass bell", "twist": "rings when a forgotten idea returns"},
+    {"name": "a seed packet with no label", "twist": "grows exactly what the story needs"},
+    {"name": "a bookmark shaped like a door", "twist": "appears on the page before the answer"},
+    {"name": "a magnifying glass with a cold handle", "twist": "shows what changed since yesterday"},
+    {"name": "a button from an old coat", "twist": "remembers every journey it has taken"},
+    {"name": "a ruler that measures courage", "twist": "gets longer when someone tells the truth kindly"}
+  ],
+  "topics": [
+    "friendship",
+    "weather",
+    "space",
+    "mini-beasts",
+    "local history",
+    "inventions",
+    "maps",
+    "mysteries",
+    "kindness",
+    "habitats",
+    "memory",
+    "teamwork",
+    "change",
+    "evidence",
+    "belonging",
+    "journeys",
+    "fairness",
+    "questions"
+  ],
+  "vocabulary": {
+    "5-7": ["kind", "bright", "tiny", "float", "whisper", "brave", "garden", "secret", "share", "soft", "near", "wonder"],
+    "8-11": ["orbit", "evidence", "habitat", "invent", "compare", "curious", "signal", "mistake", "observe", "pattern", "sudden", "choice"],
+    "12-14": ["perspective", "contradiction", "migration", "prototype", "pattern", "eclipse", "archive", "dilemma", "sequence", "inference", "motive", "consequence"],
+    "15+": ["ambiguity", "hypothesis", "inheritance", "threshold", "resonance", "ethics", "fragment", "continuity", "interpretation", "causality", "identity", "tension"]
+  },
+  "constraints": [
+    "include one question in the first paragraph",
+    "show a choice without explaining it",
+    "make the object important by the end",
+    "include one sound, one texture, and one surprise",
+    "start with a normal moment that turns strange",
+    "make the setting feel alive",
+    "use dialogue to reveal the problem",
+    "end with a new mystery"
+  ],
+  "extensions": [
+    "draw the scene and label three important details",
+    "write the next five lines of dialogue",
+    "make a word bank of six useful words",
+    "create a map of the setting",
+    "write a second ending from another character's view",
+    "turn the idea into a two-minute group performance",
+    "list three questions a reader might ask",
+    "design the object and explain its rules"
+  ],
+  "discussion_questions": [
+    "What would change if the character made the opposite choice?",
+    "Which detail gives the best clue about the setting?",
+    "How could the class solve the problem together?",
+    "What does the object seem to want?",
+    "Which word in the prompt feels most important?",
+    "What would make the ending more surprising but still fair?"
+  ],
+  "subject_packs": {
+    "Creative Writing": {
+      "focus": ["opening hooks", "character choices", "setting detail", "dialogue", "story endings"],
+      "topics": ["voice", "imagination", "conflict", "description", "mystery"],
+      "constraints": ["include one vivid setting detail", "show a feeling through an action", "use one line of dialogue", "end with a question"],
+      "extensions": ["underline the sentence that best creates curiosity", "write a second opening in a different mood", "swap the narrator and rewrite three sentences"],
+      "vocabulary": {
+        "5-7": ["begin", "feel", "look", "voice", "next", "why"],
+        "8-11": ["dialogue", "setting", "motive", "scene", "tension", "describe"],
+        "12-14": ["foreshadow", "viewpoint", "pacing", "subtext", "imagery", "structure"],
+        "15+": ["narrative", "ambiguity", "motif", "juxtapose", "perspective", "tone"]
+      }
+    },
+    "Science": {
+      "focus": ["observation", "fair testing", "habitats", "materials", "forces", "classification"],
+      "topics": ["change", "living things", "weather", "materials", "space", "energy"],
+      "constraints": ["include one observation and one prediction", "separate what is seen from what is guessed", "describe a fair test the class could try", "include one cause and one effect"],
+      "extensions": ["draw a labelled diagram of the investigation", "write one prediction and one result", "make a table with three observations"],
+      "vocabulary": {
+        "5-7": ["push", "pull", "plant", "hot", "cold", "grow"],
+        "8-11": ["observe", "predict", "evidence", "habitat", "material", "force"],
+        "12-14": ["variable", "control", "classification", "energy", "reaction", "adaptation"],
+        "15+": ["hypothesis", "correlation", "mechanism", "validity", "equilibrium", "anomaly"]
+      }
+    },
+    "History": {
+      "focus": ["sources", "chronology", "change over time", "daily life", "cause and consequence"],
+      "topics": ["local history", "artefacts", "journeys", "memory", "inventions", "old maps"],
+      "constraints": ["include one artefact as evidence", "show how life is different from today", "put three events in order", "include one source that might be unreliable"],
+      "extensions": ["write a museum label for the object", "make a three-event timeline", "ask one question a historian would investigate"],
+      "vocabulary": {
+        "5-7": ["past", "old", "new", "then", "now", "story"],
+        "8-11": ["source", "artefact", "timeline", "century", "evidence", "change"],
+        "12-14": ["chronology", "interpretation", "primary", "secondary", "legacy", "empire"],
+        "15+": ["historiography", "continuity", "causation", "provenance", "context", "reliability"]
+      }
+    },
+    "Feelings": {
+      "focus": ["empathy", "choices", "self-expression", "repairing mistakes", "listening"],
+      "topics": ["kindness", "belonging", "fairness", "courage", "friendship", "worry"],
+      "constraints": ["show the feeling through body language", "include a kind repair after a mistake", "give two characters different points of view", "include one helpful question"],
+      "extensions": ["write what the character could say next", "draw a feelings thermometer for the scene", "list two kind choices and one unhelpful choice"],
+      "vocabulary": {
+        "5-7": ["calm", "proud", "sad", "kind", "sorry", "safe"],
+        "8-11": ["empathy", "choice", "repair", "respect", "nervous", "belong"],
+        "12-14": ["perspective", "boundary", "resilience", "identity", "conflict", "trust"],
+        "15+": ["vulnerability", "accountability", "isolation", "solidarity", "self-awareness", "reconciliation"]
+      }
+    },
+    "Adventure": {
+      "focus": ["quests", "maps", "brave choices", "teamwork", "obstacles"],
+      "topics": ["journeys", "maps", "weather", "hidden doors", "signals", "rescue"],
+      "constraints": ["include one obstacle and one clever solution", "make the map slightly wrong", "show teamwork without making it too easy", "end with a new route opening"],
+      "extensions": ["draw the route and mark the turning point", "write the next obstacle", "invent a rule for travelling safely"],
+      "vocabulary": {
+        "5-7": ["map", "path", "brave", "lost", "find", "safe"],
+        "8-11": ["journey", "compass", "signal", "shelter", "route", "discover"],
+        "12-14": ["expedition", "terrain", "navigation", "threshold", "alliance", "risk"],
+        "15+": ["odyssey", "cartography", "adversity", "momentum", "threshold", "resolve"]
+      }
+    },
+    "Silly": {
+      "focus": ["wordplay", "gentle absurdity", "comic timing", "unexpected rules", "playful inventions"],
+      "topics": ["odd rules", "noisy objects", "mixed-up jobs", "talking furniture", "surprise lunches", "polite disasters"],
+      "constraints": ["keep the joke kind", "make one normal rule become silly", "include a serious character taking nonsense seriously", "end with a harmless surprise"],
+      "extensions": ["write the funniest line again in a calmer voice", "invent three rules for the silly object", "draw the moment just before everything goes wrong"],
+      "vocabulary": {
+        "5-7": ["wobble", "giggle", "splat", "oops", "snore", "bumpy"],
+        "8-11": ["ridiculous", "unexpected", "wobble", "confused", "proper", "nonsense"],
+        "12-14": ["absurd", "overreact", "contradict", "improvise", "deadpan", "chaos"],
+        "15+": ["satire", "incongruous", "parody", "escalation", "anticlimax", "farce"]
+      }
+    },
+    "Mystery": {
+      "focus": ["clues", "red herrings", "witnesses", "deduction", "fair endings"],
+      "topics": ["missing objects", "strange footprints", "coded notes", "secret maps", "unreliable memories", "locked rooms"],
+      "constraints": ["include three clues and one false lead", "make the answer possible from the evidence", "let a tiny detail matter later", "end before the answer is fully known"],
+      "extensions": ["circle the clue that matters most", "write a suspect list with motives", "draw the scene and mark where each clue was found"],
+      "vocabulary": {
+        "5-7": ["clue", "hide", "find", "ask", "look", "why"],
+        "8-11": ["suspect", "evidence", "witness", "alibi", "deduce", "motive"],
+        "12-14": ["inference", "misdirection", "contradiction", "testimony", "pattern", "reveal"],
+        "15+": ["deduction", "ambiguity", "testimony", "forensic", "plausible", "discrepancy"]
+      }
+    }
+  }
+}

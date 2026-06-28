@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StorySeed Classroom</title>
+    <link rel="icon" href="/static/assets/storyseed-app-icon.png" type="image/png" />
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Pages">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <h1>StorySeed Classroom</h1>
+            <p>Local prompt maker</p>
+          </div>
+        </div>
+        <nav class="page-nav">
+          <button class="nav-button active" data-page="start"><span class="light green"></span><span>Start</span></button>
+          <button class="nav-button" data-page="setup"><span class="light green"></span><span>Class Setup</span></button>
+          <button class="nav-button" data-page="generate"><span class="light green"></span><span>Generate</span></button>
+          <button class="nav-button" data-page="review"><span class="light red"></span><span>Review</span></button>
+          <button class="nav-button" data-page="seeds"><span class="light green"></span><span>Seed Bank</span></button>
+          <button class="nav-button" data-page="favourites"><span class="light red"></span><span>Favourites</span></button>
+        </nav>
+        <div class="nav-status">
+          <span class="light green"></span>
+          <span id="doctorStatus">Local only</span>
+        </div>
+      </aside>
+
+      <main class="main-shell">
+        <header class="topbar">
+          <div>
+            <p class="section-label" id="sectionLabel">Start</p>
+            <h2 id="pageTitle">Ready for a classroom prompt</h2>
+          </div>
+          <button class="next-step" id="nextStep" type="button">Next: Generate a prompt</button>
+        </header>
+
+        <section class="zone-brief" aria-label="Current zone guide">
+          <span class="light green" id="zoneBriefLight"></span>
+          <div>
+            <p id="zoneBriefStep">Checkpoint 1 of 6</p>
+            <strong id="zoneBriefTitle">Start on the classroom route.</strong>
+            <span id="zoneBriefHint">Generate fast, or choose a checkpoint from the route map.</span>
+          </div>
+        </section>
+
+        <section class="mission-strip" aria-label="Mission route">
+          <div class="mission-copy">
+            <p id="missionLabel">Current mission</p>
+            <strong id="missionTitle">Make the first prompt.</strong>
+            <span id="missionHint">Follow the green route, then fix anything red.</span>
+          </div>
+          <div class="mission-steps" id="missionSteps"></div>
+        </section>
+
+        <section class="page active" id="page-start" aria-label="Start page">
+          <div class="start-layout">
+            <section class="hero-panel">
+              <div>
+                <h3>Make a teacher-safe prompt in seconds.</h3>
+                <p>Choose the class shape, generate, review, then print or save.</p>
+              </div>
+              <button class="primary-action" id="startGenerateButton">Generate Prompt</button>
+            </section>
+
+            <section class="guide-panel">
+              <div class="panel-heading">
+                <h3>Readiness</h3>
+                <p>Red needs attention. Amber is usable. Green is ready.</p>
+              </div>
+              <div class="traffic-list" id="trafficList"></div>
+              <div class="safety-mini">
+                <span class="light green" id="safetyMiniLight"></span>
+                <div>
+                  <strong id="safetyMiniLabel">Seed Bank Safety Green</strong>
+                  <span id="safetyMiniSummary">Seed banks look ready for classroom use.</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="preview-panel">
+              <div class="panel-heading">
+                <h3>Current Setup</h3>
+                <p id="setupSummary">Age 8-11, Creative Writing, Playful tone</p>
+              </div>
+              <div class="preview-copy" id="startPreview">
+                Press Generate Prompt to create the first classroom task.
+              </div>
+            </section>
+
+            <section class="route-map-panel" aria-label="Classroom route">
+              <div class="panel-heading">
+                <h3>Classroom Route</h3>
+                <p>Setup, build, review, print, reuse.</p>
+              </div>
+              <div class="route-map" aria-label="StorySeed classroom route map">
+                <div class="route-stops" id="routeStops"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="page-setup" aria-label="Class setup">
+          <section class="form-panel">
+            <div class="panel-heading">
+              <h3>Class Setup</h3>
+              <p>These choices shape reading level, subject fit, and classroom tone.</p>
+            </div>
+            <div class="form-grid">
+              <label>
+                Age Band
+                <select id="ageBandInput">
+                  <option>5-7</option>
+                  <option selected>8-11</option>
+                  <option>12-14</option>
+                  <option>15+</option>
+                </select>
+              </label>
+              <label>
+                Subject
+                <select id="subjectInput">
+                  <option selected>Creative Writing</option>
+                  <option>Science</option>
+                  <option>History</option>
+                  <option>Feelings</option>
+                  <option>Adventure</option>
+                  <option>Silly</option>
+                  <option>Mystery</option>
+                </select>
+              </label>
+              <label>
+                Tone
+                <select id="toneInput">
+                  <option>Calm</option>
+                  <option selected>Playful</option>
+                  <option>Thoughtful</option>
+                  <option>Adventurous</option>
+                </select>
+              </label>
+            </div>
+            <div class="status-strip">
+              <span class="light green"></span>
+              <strong>Class setup ready.</strong>
+              <span>Next page: Generate.</span>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-generate" aria-label="Generate prompt">
+          <section class="form-panel">
+            <div class="panel-heading">
+              <h3>Prompt Builder</h3>
+              <p>One mode, one seed, one useful classroom task.</p>
+            </div>
+            <div class="form-grid">
+              <label>
+                Mode
+                <select id="modeInput">
+                  <option>Story Starter</option>
+                  <option>Drawing Prompt</option>
+                  <option>What If?</option>
+                  <option>Vocabulary Quest</option>
+                  <option>Finish The Scene</option>
+                  <option>Class Discussion</option>
+                  <option>Silly Invention</option>
+                  <option>Mystery Hook</option>
+                </select>
+              </label>
+              <label>
+                Seed
+                <input id="seedInput" type="text" inputmode="numeric" placeholder="auto" />
+              </label>
+              <label class="range-label">
+                Creativity
+                <input id="creativityInput" type="range" min="0" max="100" value="55" />
+                <span id="creativityValue">55</span>
+              </label>
+            </div>
+            <label class="check-row">
+              <input id="lockSeedInput" type="checkbox" />
+              Keep this seed for repeatable prompts
+            </label>
+            <div class="button-row">
+              <button class="primary-button" id="generateButton">Generate Prompt</button>
+              <button id="sameSeedButton">Regenerate Same Seed</button>
+            </div>
+          </section>
+          <section class="builder-guide" aria-label="Prompt build station">
+            <div class="builder-guide-copy">
+              <p>Build Station</p>
+              <h3>Mode, spark, seed.</h3>
+              <span>Pick the task shape, set how wild it should feel, then generate one classroom-ready prompt.</span>
+            </div>
+            <div class="builder-readout" id="builderReadout"></div>
+          </section>
+        </section>
+
+        <section class="page" id="page-review" aria-label="Review prompt">
+          <section class="review-panel">
+            <div class="panel-heading">
+              <div>
+                <h3 id="promptTitle">No prompt yet</h3>
+                <p id="promptMeta">Generate a prompt first.</p>
+              </div>
+              <div class="button-row">
+                <button id="copyButton">Copy</button>
+                <button id="saveButton">Save Favourite</button>
+                <button id="reviewSameSeedButton">Regenerate Same Seed</button>
+                <button id="exportTxtButton">Export TXT</button>
+                <button id="exportHtmlButton">Export HTML</button>
+                <button id="printWorksheetButton">Print Worksheet</button>
+                <button id="openLatestWorksheetButton" hidden>Open Latest Worksheet</button>
+                <button id="openExportsButton" hidden>Open Exports Folder</button>
+              </div>
+            </div>
+            <nav class="review-switch" aria-label="Review views">
+              <button class="view-tab active" id="studentViewButton" data-review-view="student">Student View</button>
+              <button class="view-tab" id="teacherViewButton" data-review-view="teacher">Teacher Notes</button>
+            </nav>
+            <div class="review-view active" id="studentReview">
+              <pre id="promptOutput" class="prompt-output">A classroom prompt will appear here.</pre>
+            </div>
+            <div class="review-view" id="teacherReview">
+              <div class="teacher-output" id="teacherOutput">Teacher notes will appear after generation.</div>
+            </div>
+            <p id="actionMessage" class="action-message"></p>
+          </section>
+          <section class="trace-panel">
+            <h3>Why This Prompt Happened</h3>
+            <div id="traceOutput" class="trace-output">Prime traces will appear after generation.</div>
+          </section>
+        </section>
+
+        <section class="page" id="page-seeds" aria-label="Seed bank">
+          <section class="seed-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Seed Bank</h3>
+                <p>Edit the classroom-safe ingredients. One item per line.</p>
+              </div>
+              <div class="button-row">
+                <button id="saveSeedsButton">Save Seeds</button>
+                <button id="resetSeedsButton">Reset Defaults</button>
+              </div>
+            </div>
+            <section class="safety-panel" aria-label="Classroom safety check">
+              <div class="safety-status">
+                <span class="light green" id="safetyLight"></span>
+                <div>
+                  <h4 id="safetyLabel">Seed Bank Safety Green</h4>
+                  <p id="safetySummary">Seed banks look ready for classroom use.</p>
+                </div>
+              </div>
+              <div class="safety-counts" id="safetyCounts"></div>
+              <div class="safety-issues" id="safetyIssues"></div>
+            </section>
+            <nav class="tabs" aria-label="Seed editors">
+              <button class="tab active" data-tab="characters">Characters</button>
+              <button class="tab" data-tab="settings">Settings</button>
+              <button class="tab" data-tab="objects">Objects</button>
+              <button class="tab" data-tab="topics">Topics</button>
+              <button class="tab" data-tab="vocabulary">Vocabulary</button>
+            </nav>
+            <div class="editor active" id="charactersEditor">
+              <label>Characters: name | trait | wish</label>
+              <textarea id="charactersText"></textarea>
+            </div>
+            <div class="editor" id="settingsEditor">
+              <label>Settings: name | texture</label>
+              <textarea id="settingsText"></textarea>
+            </div>
+            <div class="editor" id="objectsEditor">
+              <label>Objects: name | twist</label>
+              <textarea id="objectsText"></textarea>
+            </div>
+            <div class="editor" id="topicsEditor">
+              <label>Topics: one topic per line</label>
+              <textarea id="topicsText"></textarea>
+            </div>
+            <div class="editor" id="vocabularyEditor">
+              <label>Vocabulary: age band | comma separated words</label>
+              <textarea id="vocabularyText"></textarea>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-favourites" aria-label="Favourites">
+          <section class="favourites-panel">
+            <div class="panel-heading">
+              <h3>Favourites</h3>
+              <p>Saved prompts stay local on this computer.</p>
+            </div>
+            <div id="favouritesList" class="favourites-list"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

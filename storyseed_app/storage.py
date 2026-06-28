@@ -1,0 +1,214 @@
+from __future__ import annotations
+
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import time
+from typing import Any
+
+from .engine import prompt_to_html, prompt_to_text
+
+
+APP_NAME = "StorySeedClassroom"
+
+
+def repo_root() -> Path:
+    return Path(__file__).resolve().parent.parent
+
+
+def app_data_dir() -> Path:
+    override = os.getenv("STORYSEED_HOME")
+    if override:
+        root = Path(override).expanduser()
+    else:
+        root = repo_root() / "user-data"
+    root.mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def exports_dir() -> Path:
+    path = app_data_dir() / "exports"
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def default_state_path() -> Path:
+    return repo_root() / "storyseed_app" / "seeds" / "classroom_default.json"
+
+
+def user_state_path() -> Path:
+    return app_data_dir() / "classroom.json"
+
+
+def favourites_path() -> Path:
+    return app_data_dir() / "favourites.json"
+
+
+def load_default_state() -> dict[str, Any]:
+    return _read_json(default_state_path(), fallback={})
+
+
+def load_state() -> dict[str, Any]:
+    path = user_state_path()
+    if not path.exists():
+        state = load_default_state()
+        save_state(state)
+        return state
+    state = _read_json(path, fallback=None)
+    if not isinstance(state, dict) or not state.get("characters"):
+        broken = path.with_suffix(f".broken-{int(time.time())}.json")
+        try:
+            shutil.copy2(path, broken)
+        except OSError:
+            pass
+        state = load_default_state()
+        save_state(state)
+    normalized = _normalize_state(state)
+    if normalized != state:
+        save_state(normalized)
+    return normalized
+
+
+def save_state(state: dict[str, Any]) -> dict[str, Any]:
+    normalized = _normalize_state(state)
+    _write_json(user_state_path(), normalized)
+    return normalized
+
+
+def reset_state() -> dict[str, Any]:
+    state = load_default_state()
+    save_state(state)
+    return state
+
+
+def list_favourites() -> list[dict[str, Any]]:
+    data = _read_json(favourites_path(), fallback=[])
+    return data if isinstance(data, list) else []
+
+
+def save_favourite(prompt: dict[str, Any]) -> dict[str, Any]:
+    favourites = list_favourites()
+    item = {
+        "id": f"fav-{int(time.time() * 1000)}",
+        "title": str(prompt.get("title") or "Untitled Prompt"),
+        "seed": prompt.get("seed"),
+        "mode": prompt.get("mode"),
+        "age_band": prompt.get("age_band"),
+        "created_at": prompt.get("created_at") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "prompt": prompt,
+    }
+    favourites.insert(0, item)
+    _write_json(favourites_path(), favourites[:100])
+    return item
+
+
+def export_prompt(prompt: dict[str, Any], export_format: str = "txt") -> dict[str, Any]:
+    export_format = "html" if str(export_format).lower() == "html" else "txt"
+    title = str(prompt.get("title") or "storyseed-prompt")
+    stem = _slugify(title)[:70] or "storyseed-prompt"
+    stamp = time.strftime("%Y%m%d-%H%M%S")
+    path = exports_dir() / f"{stamp}-{stem}.{export_format}"
+    content = prompt_to_html(prompt) if export_format == "html" else prompt_to_text(prompt)
+    path.write_text(content, encoding="utf-8")
+    return {"path": str(path), "format": export_format, "title": title}
+
+
+def open_exports_folder(opener: Any | None = None) -> dict[str, Any]:
+    path = exports_dir().resolve()
+    root = app_data_dir().resolve()
+    if path != root and root not in path.parents:
+        raise RuntimeError("Refusing to open a folder outside StorySeed data.")
+    try:
+        if os.getenv("STORYSEED_DISABLE_OPEN") == "1":
+            return {"opened": False, "path": str(path), "error": "Opening folders is disabled for this run."}
+        if opener:
+            opener(path)
+        elif os.name == "nt":
+            os.startfile(str(path))  # type: ignore[attr-defined]
+        elif sys.platform == "darwin":
+            subprocess.Popen(["open", str(path)])
+        else:
+            subprocess.Popen(["xdg-open", str(path)])
+        return {"opened": True, "path": str(path)}
+    except (OSError, RuntimeError) as exc:
+        return {"opened": False, "path": str(path), "error": str(exc)}
+
+
+def open_export_file(path_value: str, opener: Any | None = None) -> dict[str, Any]:
+    root = exports_dir().resolve()
+    path = Path(path_value or "").expanduser().resolve(strict=False)
+    if path != root and root not in path.parents:
+        return {"opened": False, "path": str(path), "error": "That file is outside the StorySeed exports folder."}
+    if not path.exists() or not path.is_file():
+        return {"opened": False, "path": str(path), "error": "That export file was not found."}
+    try:
+        if os.getenv("STORYSEED_DISABLE_OPEN") == "1":
+            return {"opened": False, "path": str(path), "error": "Opening files is disabled for this run."}
+        if opener:
+            opener(path)
+        elif os.name == "nt":
+            os.startfile(str(path))  # type: ignore[attr-defined]
+        elif sys.platform == "darwin":
+            subprocess.Popen(["open", str(path)])
+        else:
+            subprocess.Popen(["xdg-open", str(path)])
+        return {"opened": True, "path": str(path)}
+    except (OSError, RuntimeError) as exc:
+        return {"opened": False, "path": str(path), "error": str(exc)}
+
+
+def doctor() -> dict[str, Any]:
+    data_dir = app_data_dir()
+    state = load_state()
+    return {
+        "data_dir": str(data_dir),
+        "state_path": str(user_state_path()),
+        "favourites_path": str(favourites_path()),
+        "exports_dir": str(exports_dir()),
+        "portable_default": "STORYSEED_HOME" not in os.environ,
+        "state_ok": bool(state.get("characters")),
+        "character_count": len(state.get("characters", [])),
+        "favourite_count": len(list_favourites()),
+    }
+
+
+def _normalize_state(state: dict[str, Any]) -> dict[str, Any]:
+    default = load_default_state()
+    normalized = dict(default)
+    if isinstance(state, dict):
+        normalized.update(state)
+    for key in ["characters", "settings", "objects", "topics", "constraints", "extensions", "discussion_questions"]:
+        if not isinstance(normalized.get(key), list):
+            normalized[key] = default.get(key, [])
+    if not isinstance(normalized.get("vocabulary"), dict):
+        normalized["vocabulary"] = default.get("vocabulary", {})
+    if not isinstance(normalized.get("subject_packs"), dict):
+        normalized["subject_packs"] = default.get("subject_packs", {})
+    normalized["version"] = int(normalized.get("version") or 1)
+    normalized["world_name"] = str(normalized.get("world_name") or APP_NAME)
+    return normalized
+
+
+def _read_json(path: Path, fallback: Any) -> Any:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return fallback
+
+
+def _write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    tmp.replace(path)
+
+
+def _slugify(value: str) -> str:
+    value = value.lower()
+    value = "".join(ch if ch.isalnum() else "-" for ch in value)
+    while "--" in value:
+        value = value.replace("--", "-")
+    return value.strip("-")

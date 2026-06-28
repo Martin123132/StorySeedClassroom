@@ -1,0 +1,15 @@
+[project]
+name = "storyseed-classroom"
+version = "0.1.0"
+description = "Local-first classroom-safe creative prompt generator."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "StorySeed Classroom" }]
+dependencies = []
+
+[project.scripts]
+storyseed-classroom = "storyseed_app.app:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

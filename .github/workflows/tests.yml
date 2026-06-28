@@ -1,0 +1,31 @@
+name: StorySeed checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run validation
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "$env:RUNNER_TEMP\StorySeedData", "$env:RUNNER_TEMP\StorySeedVerifyWork" | Out-Null
+          $env:STORYSEED_HOME = "$env:RUNNER_TEMP\StorySeedData"
+          $env:STORYSEED_TEST_TMP = "$env:RUNNER_TEMP"
+          python -m unittest discover -s tests
+          python -m compileall storyseed_app tests scripts
+          python scripts\check_assets.py
+          node --check storyseed_app\static\app.js
+          powershell -ExecutionPolicy Bypass -File scripts\make_release_zip.ps1
+          $zip = (Get-ChildItem dist\StorySeedClassroom-v*.zip | Sort-Object LastWriteTime -Descending | Select-Object -First 1).FullName
+          powershell -ExecutionPolicy Bypass -File scripts\verify_release_zip.ps1 -ZipPath $zip -WorkRoot "$env:RUNNER_TEMP\StorySeedVerifyWork"
