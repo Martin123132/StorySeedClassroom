@@ -1,0 +1,50 @@
+name: Bug report
+description: Something did not launch, display, save, export, or behave as expected.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying StorySeed Classroom. It runs locally and collects no telemetry, so a few clear details make bug reports much easier to fix.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Say what you expected and what happened instead.
+      placeholder: I double-clicked the launcher, the browser opened, but...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the clicks or commands that led to the issue.
+      placeholder: |
+        1. Downloaded the ZIP
+        2. Unzipped it
+        3. Double-clicked START_StorySeed_WINDOWS.bat
+        4. Pressed Generate Prompt
+    validations:
+      required: true
+  - type: input
+    id: windows-version
+    attributes:
+      label: Windows version
+      placeholder: Windows 11, Windows 10, not sure
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      placeholder: Python 3.13.3, Python missing, not sure
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot or exact message
+      description: Drag in a screenshot or paste the exact text you saw.
+  - type: checkboxes
+    id: local-first
+    attributes:
+      label: Local-first check
+      options:
+        - label: I did not add API keys, accounts, cloud services, or AI provider credentials.

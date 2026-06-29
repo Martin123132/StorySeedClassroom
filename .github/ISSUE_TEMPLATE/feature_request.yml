@@ -1,0 +1,28 @@
+name: Feature idea
+description: Suggest a small improvement that fits the local-first classroom tool.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      placeholder: I want to reuse a prompt with a different age band without rebuilding the setup.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What is the idea?
+      placeholder: Add a button on Review that copies the current seed back into Generate.
+    validations:
+      required: true
+  - type: checkboxes
+    id: fit
+    attributes:
+      label: Product fit
+      options:
+        - label: It works without API keys.
+        - label: It works without accounts or cloud calls.
+        - label: It keeps the UI simple enough for a non-technical user.
+        - label: It helps with classroom prompt creation, review, saving, or export.

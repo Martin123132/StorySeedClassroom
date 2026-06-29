@@ -17,6 +17,7 @@ class PublicReadinessTests(unittest.TestCase):
         self.assertIn("docs/screenshots/storyseed-generate-desktop.png", readme)
         self.assertIn("docs/GITHUB_FEEDBACK.md", readme)
         self.assertIn("docs/SELF_TEST_GAUNTLET.md", readme)
+        self.assertIn("releases/latest", readme)
 
     def test_public_screenshots_are_checked_in_ready(self) -> None:
         screenshots = [
@@ -29,6 +30,19 @@ class PublicReadinessTests(unittest.TestCase):
             with self.subTest(screenshot=screenshot.name):
                 self.assertTrue(screenshot.exists())
                 self.assertGreater(screenshot.stat().st_size, 20_000)
+
+    def test_github_issue_templates_exist(self) -> None:
+        templates = [
+            PROJECT_ROOT / ".github" / "ISSUE_TEMPLATE" / "bug_report.yml",
+            PROJECT_ROOT / ".github" / "ISSUE_TEMPLATE" / "prompt_feedback.yml",
+            PROJECT_ROOT / ".github" / "ISSUE_TEMPLATE" / "feature_request.yml",
+        ]
+
+        for template in templates:
+            with self.subTest(template=template.name):
+                text = template.read_text(encoding="utf-8")
+                self.assertIn("name:", text)
+                self.assertIn("body:", text)
 
 
 if __name__ == "__main__":

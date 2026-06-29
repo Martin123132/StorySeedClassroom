@@ -57,6 +57,9 @@ Check the ZIP contains:
 - `docs\screenshots\storyseed-generate-desktop.png`
 - `docs\GITHUB_FEEDBACK.md`
 - `docs\SELF_TEST_GAUNTLET.md`
+- `.github\ISSUE_TEMPLATE\bug_report.yml`
+- `.github\ISSUE_TEMPLATE\prompt_feedback.yml`
+- `.github\ISSUE_TEMPLATE\feature_request.yml`
 
 Check the ZIP does not contain:
 

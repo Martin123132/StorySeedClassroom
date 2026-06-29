@@ -1,0 +1,49 @@
+name: Prompt feedback
+description: A generated classroom prompt was great, odd, too weak, too wild, or not age-fit.
+title: "[Prompt]: "
+labels: ["prompt-feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        StorySeed is deterministic. If you include the setup values, the same prompt can be recreated.
+  - type: input
+    id: seed
+    attributes:
+      label: Seed
+      placeholder: "424242"
+    validations:
+      required: true
+  - type: input
+    id: mode
+    attributes:
+      label: Mode
+      placeholder: Story Starter, Mystery Hook, Drawing Prompt...
+  - type: input
+    id: age-band
+    attributes:
+      label: Age band
+      placeholder: 5-7, 8-11, 12-14, 15+
+  - type: input
+    id: subject
+    attributes:
+      label: Subject
+      placeholder: Creative Writing, Science, History...
+  - type: input
+    id: creativity
+    attributes:
+      label: Creativity value
+      placeholder: "55"
+  - type: textarea
+    id: feedback
+    attributes:
+      label: What should change?
+      description: Say whether it was useful, funny, too vague, too hard, too young, too old, or surprisingly good.
+      placeholder: The prompt was good, but the teacher note did not help me run the activity.
+    validations:
+      required: true
+  - type: textarea
+    id: prompt-text
+    attributes:
+      label: Prompt text
+      description: Paste the generated prompt if it is short enough.

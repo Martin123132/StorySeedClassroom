@@ -1,8 +1,14 @@
 # StorySeed Classroom
 
-StorySeed Classroom is a local-first classroom prompt generator. It turns safe
-seed banks into writing, drawing, discussion, vocabulary, mystery, and invention
-prompts without API keys, accounts, cloud calls, npm, or a build step.
+StorySeed Classroom is a Windows-simple, local-first classroom prompt generator.
+Download the ZIP, unzip it, double-click `START_StorySeed_WINDOWS.bat`, then
+press `Generate Prompt`.
+
+It turns safe seed banks into writing, drawing, discussion, vocabulary, mystery,
+and invention prompts without API keys, accounts, cloud calls, npm, or a build
+step.
+
+[Download the latest release](https://github.com/Martin123132/StorySeedClassroom/releases/latest)
 
 ![StorySeed Generate page](docs/screenshots/storyseed-generate-desktop.png)
 
@@ -130,6 +136,8 @@ open an issue and include the prompt seed, mode, age band, subject, creativity
 value, and what you clicked before the problem happened.
 
 More detail: [docs/GITHUB_FEEDBACK.md](docs/GITHUB_FEEDBACK.md)
+
+GitHub issue forms are available for bugs, prompt feedback, and feature ideas.
 
 ## License
 

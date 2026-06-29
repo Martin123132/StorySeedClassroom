@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Feedback guide
+    url: https://github.com/Martin123132/StorySeedClassroom/blob/main/docs/GITHUB_FEEDBACK.md
+    about: Read what makes feedback most useful for a local-first app with no telemetry.
