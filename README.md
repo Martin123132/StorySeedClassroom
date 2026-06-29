@@ -70,6 +70,8 @@ again.
   class, student task, checklist, writing lines, and teacher notes.
 - Review includes Student View, Teacher Notes, Print Worksheet, and Open Latest
   Worksheet.
+- Review Station adds local traffic-light checks for classroom safety, age fit,
+  subject fit, task shape, export readiness, and reuse readiness.
 - Saves local edits and favourites only on the user's machine.
 
 ## Storage

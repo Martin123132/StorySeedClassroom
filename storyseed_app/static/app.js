@@ -273,6 +273,7 @@ function renderPrompt() {
   el("actionMessage").textContent = "Prompt ready.";
   el("openExportsButton").hidden = true;
   el("openLatestWorksheetButton").hidden = true;
+  renderReviewStation();
   setReviewView("student");
 }
 
@@ -352,6 +353,89 @@ function renderTraffic() {
   renderMissionStrip(items, route);
   renderRouteMap(items);
   renderSafety();
+  renderReviewStation();
+}
+
+function renderReviewStation() {
+  const checks = reviewStationChecks();
+  el("reviewChecks").innerHTML = checks
+    .map(
+      (item) => `
+      <div class="review-check" data-status="${item.status}">
+        <span class="light ${item.status}"></span>
+        <div><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.detail)}</span></div>
+      </div>`,
+    )
+    .join("");
+  const next = reviewNextAction(checks);
+  el("reviewStationNext").textContent = next;
+}
+
+function reviewStationChecks() {
+  if (!currentPrompt) {
+    return [
+      { name: "Prompt", status: "red", detail: "Generate a prompt before review." },
+      { name: "Export", status: "red", detail: "Export appears after generation." },
+      { name: "Reuse", status: "red", detail: "Save appears after review." },
+    ];
+  }
+  const checklist = currentPrompt.checklist || [];
+  const vocabulary = currentPrompt.vocabulary || [];
+  const youngLearners = currentPrompt.age_band === "5-7";
+  const longWords = vocabulary.filter((word) => String(word).length > 8);
+  const saved = isCurrentPromptFavourite();
+  const safetyStatus = safetyReport?.status || "green";
+  const ageStatus = youngLearners && (currentPrompt.creativity > 80 || longWords.length > 1) ? "amber" : "green";
+  const subjectStatus = currentPrompt.subject_focus && String(currentPrompt.teacher_note || "").includes(currentPrompt.subject_focus) ? "green" : "amber";
+  const taskStatus = currentPrompt.task && currentPrompt.challenge && checklist.length >= 3 ? "green" : "amber";
+  return [
+    {
+      name: "Classroom Safety",
+      status: safetyStatus,
+      detail: safetyReport?.summary || "Seed bank safety looks ready.",
+    },
+    {
+      name: "Age Fit",
+      status: ageStatus,
+      detail:
+        ageStatus === "green"
+          ? `Age ${currentPrompt.age_band} with ${checklist.length} checklist steps.`
+          : `Age ${currentPrompt.age_band}; read once before using this spark level.`,
+    },
+    {
+      name: "Subject Fit",
+      status: subjectStatus,
+      detail: `${currentPrompt.subject}: ${currentPrompt.subject_focus || "general classroom focus"}.`,
+    },
+    {
+      name: "Task Shape",
+      status: taskStatus,
+      detail: taskStatus === "green" ? "Task, challenge, vocabulary, and checklist are present." : "Read the task once before sharing.",
+    },
+    {
+      name: "Export",
+      status: lastExport ? "green" : "amber",
+      detail: lastExport ? `${lastExport.format.toUpperCase()} ready.` : "Export TXT or HTML before class.",
+    },
+    {
+      name: "Reuse",
+      status: saved ? "green" : "amber",
+      detail: saved ? "Saved on the reuse shelf." : "Save Favourite if this one works.",
+    },
+  ];
+}
+
+function reviewNextAction(checks) {
+  if (!currentPrompt) return "Next: Generate";
+  if (checks.some((item) => item.name === "Classroom Safety" && item.status === "red")) return "Next: Fix Seed Bank";
+  if (!lastExport) return "Next: Export";
+  if (!isCurrentPromptFavourite()) return "Next: Save Favourite";
+  return "Ready for reuse";
+}
+
+function isCurrentPromptFavourite() {
+  if (!currentPrompt) return false;
+  return favourites.some((item) => String(item.seed) === String(currentPrompt.seed) && item.title === currentPrompt.title);
 }
 
 function renderSidebarRoute(items) {
@@ -570,6 +654,7 @@ async function saveFavourite() {
   favourites = data.favourites;
   setMessage("Favourite saved.");
   renderFavourites(favourites);
+  renderReviewStation();
   renderTraffic();
 }
 
@@ -582,6 +667,7 @@ async function exportPrompt(format, announce = true) {
   if (announce) {
     setMessage(`Exported ${format.toUpperCase()}: ${data.export.path}`);
   }
+  renderReviewStation();
   renderTraffic();
   return data.export;
 }
